@@ -8,6 +8,8 @@ from rest_framework.views import View
 from django.urls import path, include
 from django.conf import settings
 
+from .utils import clean_app_name, get_modules_list
+
 
 class Router:
     _auto_load_modules = True
@@ -52,33 +54,13 @@ class Router:
         if self.debug:
             print("Auto Router - " + message)
 
-    def _clean_app_name(self, app_name) -> str:
-        split = str(app_name).split(".")
-        end_index = len(split)
-
-        for index, element in enumerate(split):
-            if index == 0:
-                continue
-
-            if element == "apps":
-                end_index = index
-                break
-
-        return ".".join(split[0:end_index])
-
-    def get_modules_list(self) -> list[str]:
-        if hasattr(settings, "AUTO_ROUTER_MODULES"):
-            return getattr(settings, "AUTO_ROUTER_MODULES")
-
-        return ["views"]
-
     def _load_all_modules(self) -> None:
         for module in settings.INSTALLED_APPS:
             try:
-                self._log("Searching for views in app " + self._clean_app_name(module))
-                for module_name in self.get_modules_list():
+                self._log("Searching for views in app " + clean_app_name(module))
+                for module_name in get_modules_list():
                     module = importlib.import_module(
-                        self._clean_app_name(module) + "." + module_name
+                        clean_app_name(module) + "." + module_name
                     )
                     self._log("Found module " + str(module))
                     for attribute_name in dir(module):
@@ -87,7 +69,7 @@ class Router:
                         if isclass(attribute):
                             # Add the class to this package's variables
                             globals()[attribute_name] = attribute
-            except ModuleNotFoundError as e:
+            except ModuleNotFoundError:
                 pass
             except Exception as e:
                 raise e
