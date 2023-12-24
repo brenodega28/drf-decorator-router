@@ -9,6 +9,7 @@ Django = "*"
 
 [dev-packages]
 model-mommy = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.9"
