@@ -24,10 +24,10 @@ How to Use
 #### main_app/routes.py
 ```python
 from rest_framework import generics, viewsets
-from drf_decorator_router import AutoRouter
+from drf_decorator_router import Router
 
 # Declaring the router
-router = AutoRouter("api/v1", namespace="api-v1")
+router = Router("api/v1", namespace="api-v1")
 ```
 
 #### example_app/views.py
