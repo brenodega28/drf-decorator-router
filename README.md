@@ -1,6 +1,10 @@
 Decorator Router for Django Rest Framework
 ==========================================
 
+Build Status
+------------
+[![build](https://github.com/brenodega28/drf-decorator-router/actions/workflows/build.yml/badge.svg)](https://github.com/brenodega28/drf-decorator-router/actions/workflows/build.yml)
+
 About
 -----
 Django Rest Framework package to quickly route your views with decorators.
