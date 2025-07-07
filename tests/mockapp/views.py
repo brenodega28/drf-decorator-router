@@ -12,17 +12,16 @@ class MockStoreViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MockStoreSerializer
 
 
-@router.route_view("mock-products", "mock-products")
+@router.route_view("mock-products/", "mock-products")
 class MockProductsListView(generics.ListAPIView):
     queryset = models.MockProduct.objects.all()
     serializer_class = serializers.MockProductSerializer
 
 
-@router.route_view("mock-store/<int:store_id>/mock-products", "mock-store-products")
+@router.route_view("mock-store/<int:store_id>/mock-products/", "mock-store-products")
 class MockStoreProductsListView(MockProductsListView):
     def list(self, request, *args, **kwargs):
         queryset = self.queryset.filter(store__id=kwargs.get('store_id'))
         serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
-

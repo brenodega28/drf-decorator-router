@@ -50,6 +50,9 @@ class Router:
 
         return inner
 
+    def on_views_loaded(self) -> None:
+        pass
+
     def _log(self, message: str) -> None:
         if self.debug:
             print("Auto Router - " + message)
@@ -73,6 +76,8 @@ class Router:
                 pass
             except Exception as e:
                 raise e
+
+        self.on_views_loaded()
 
     @property
     def urls(self) -> list[str]:

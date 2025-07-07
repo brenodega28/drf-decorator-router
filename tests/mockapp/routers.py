@@ -1,3 +1,3 @@
-from drf_decorator_router import Router
+from drf_decorator_router import TSRouter
 
-router = Router("api/v1", "api-v1")
+router = TSRouter("api/v1/", "api-v1")
