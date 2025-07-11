@@ -15,8 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from .mockapp.routers import router
+from django.contrib import admin
+from django.urls import path
+
+from .mockapp.routers import admin_router, router
 
 urlpatterns = [
-    router.path
+    path("admin/", admin.site.urls),
+    router.path,
+    admin_router.path
 ]
