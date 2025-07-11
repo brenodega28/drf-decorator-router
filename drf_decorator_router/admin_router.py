@@ -1,11 +1,6 @@
-from typing import Never
-
-from django.contrib.admin import ModelAdmin, register, site
+from django.contrib.admin import ModelAdmin, site
 from django.db.models import Model
-from rest_framework.decorators import action
-from rest_framework.generics import QuerySet
 from rest_framework.permissions import IsAdminUser
-from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
@@ -15,7 +10,6 @@ from .base import BaseRouter
 class ModelAdminSerializer(ModelSerializer):
     class Meta:
         fields = []
-
 
 
 class AdminRouter(BaseRouter):
@@ -31,7 +25,7 @@ class AdminRouter(BaseRouter):
             )
 
             class _viewset(ModelViewSet):
-                model_admin: ModelAdmin 
+                model_admin: ModelAdmin
                 permission_classes = [IsAdminUser]
                 filterset_fields = []
                 search_fields = []
@@ -43,7 +37,6 @@ class AdminRouter(BaseRouter):
                     cls = ModelAdminSerializer
                     cls.Meta.model = self.model_admin.model
                     cls.Meta.fields = self.model_admin.list_display
-
                     return cls
 
                 @classmethod
