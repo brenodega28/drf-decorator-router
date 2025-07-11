@@ -54,7 +54,7 @@ class AdminRouter(BaseRouter):
                     return cls
 
             _viewset = _viewset.from_admin(model_admin(model, site))
-            self._router.register(route, _viewset, basename=basename)
+            self._router.register(route, _viewset, basename=basename or route)
             return _viewset
 
         return inner
