@@ -30,9 +30,11 @@ class AdminRouter(BaseRouter):
                 + route
             )
 
-            class ModelAdminViewSet(ModelViewSet):
-                model_admin: ModelAdmin
+            class _viewset(ModelViewSet):
+                model_admin: ModelAdmin 
                 permission_classes = [IsAdminUser]
+                filterset_fields = []
+                search_fields = []
 
                 def get_queryset(self):
                     return self.model_admin.get_queryset(self.request)
@@ -41,16 +43,25 @@ class AdminRouter(BaseRouter):
                     cls = ModelAdminSerializer
                     cls.Meta.model = self.model_admin.model
                     cls.Meta.fields = self.model_admin.list_display
-                    
-                    print(dir(self.model_admin.get_changelist_form(self.request)))
-                    print(self.model_admin.get_changelist_form(self.request).base_fields)
 
                     return cls
 
+                @classmethod
+                def from_admin(cls, model_admin: ModelAdmin):
+                    cls.model_admin = model_admin
+                    cls.filterset_fields = model_admin.list_filter
+                    cls.search_fields = model_admin.search_fields
 
-            viewset = ModelAdminViewSet
-            viewset.model_admin = model_admin(model, site)
-            self._router.register(route, viewset, basename=basename)
-            return viewset
+                    if hasattr(model_admin, "filter_backends"):
+                        cls.filter_backends = getattr(model_admin, "filter_backends")
+
+                    if hasattr(model_admin, "filterset_class"):
+                        cls.filterset_class = getattr(model_admin, "filterset_class")
+
+                    return cls
+
+            _viewset = _viewset.from_admin(model_admin(model, site))
+            self._router.register(route, _viewset, basename=basename)
+            return _viewset
 
         return inner
