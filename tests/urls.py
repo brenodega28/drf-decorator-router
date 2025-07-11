@@ -18,9 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .mockapp.routers import router
+from .mockapp.routers import admin_router, router
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    router.path
+    router.path,
+    admin_router.path
 ]
