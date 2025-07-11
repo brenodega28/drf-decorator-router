@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 djangorestframework = "*"
 Django = "*"
+django-filter = "*"
+pytz = "*"
 
 [dev-packages]
 model-mommy = "*"

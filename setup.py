@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
-
 # read the contents of your README file
 from pathlib import Path
+
+from setuptools import setup
+
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="drf-decorator-router",
-    version="0.1",
+    version="0.3",
     description="Fast API like decorator for routing DRF Views and Viewsets.",
     long_description=long_description,
     long_description_content_type='text/markdown',

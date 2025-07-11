@@ -10,6 +10,7 @@ class TimeStampedModel(models.Model):
 
 
 class MockStore(TimeStampedModel):
+    organization = models.CharField(max_length=50)
     name = models.CharField(max_length=30)
 
     def __str__(self) -> str:
@@ -22,3 +23,7 @@ class MockProduct(TimeStampedModel):
 
     def __str__(self) -> str:
         return f"({self.store.name}) - {self.name}"
+
+    @property
+    def organization(self):
+        return self.store.organization
