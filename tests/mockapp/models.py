@@ -20,6 +20,7 @@ class MockStore(TimeStampedModel):
 class MockProduct(TimeStampedModel):
     name = models.CharField(max_length=30)
     store = models.ForeignKey(MockStore, on_delete=models.CASCADE)
+    product_code = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return f"({self.store.name}) - {self.name}"

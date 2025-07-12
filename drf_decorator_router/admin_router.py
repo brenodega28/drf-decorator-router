@@ -7,11 +7,6 @@ from rest_framework.viewsets import ModelViewSet
 from .base import BaseRouter
 
 
-class ModelAdminSerializer(ModelSerializer):
-    class Meta:
-        fields = []
-
-
 class AdminRouter(BaseRouter):
     def register(self, model: Model, route: str, basename: str = ""):
         def inner(model_admin: ModelAdmin):
@@ -34,10 +29,19 @@ class AdminRouter(BaseRouter):
                     return self.model_admin.get_queryset(self.request)
 
                 def get_serializer_class(self):
-                    cls = ModelAdminSerializer
-                    cls.Meta.model = self.model_admin.model
-                    cls.Meta.fields = self.model_admin.list_display
-                    return cls
+
+                    class _serializer(ModelSerializer):
+                        class Meta:
+                            pass
+
+                    _serializer.Meta.model = self.model_admin.model
+
+                    if self.action == 'list':
+                        _serializer.Meta.fields = self.model_admin.list_display
+                    else:
+                        _serializer.Meta.exclude = []
+
+                    return _serializer
 
                 @classmethod
                 def from_admin(cls, model_admin: ModelAdmin):
