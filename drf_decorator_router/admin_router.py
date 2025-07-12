@@ -51,6 +51,9 @@ class AdminRouter(BaseRouter):
                     if hasattr(model_admin, "filterset_class"):
                         cls.filterset_class = getattr(model_admin, "filterset_class")
 
+                    if hasattr(model_admin, "pagination_class"):
+                        cls.pagination_class = getattr(model_admin, "pagination_class")
+
                     return cls
 
             _viewset = _viewset.from_admin(model_admin(model, site))

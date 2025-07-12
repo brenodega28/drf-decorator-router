@@ -10,7 +10,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="drf-decorator-router",
-    version="0.3.1",
+    version="0.3.2",
     description="Fast API like decorator for routing DRF Views and Viewsets.",
     long_description=long_description,
     long_description_content_type='text/markdown',
