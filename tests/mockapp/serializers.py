@@ -11,8 +11,8 @@ class MockProductSerializer(serializers.ModelSerializer):
 
 class MockStoreSerializer(serializers.ModelSerializer):
     products = MockProductSerializer(source="mockproduct_set", many=True)
+    extra_code = serializers.CharField(default="test")
 
     class Meta:
         model = models.MockStore
         exclude = []
-

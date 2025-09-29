@@ -22,6 +22,7 @@ class DecoratorRouterAPITestCase(APITestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(json), 2)
+        self.assertEqual(json[0]['extra_code'], 'test')
 
     def test_it_retrieves_store_from_viewset(self):
         url = reverse("api-v1:mock-store-detail", (self.store_1.id,))
