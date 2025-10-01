@@ -16,6 +16,9 @@ class MockStore(TimeStampedModel):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        ordering = ['-name']
+
 
 class MockProduct(TimeStampedModel):
     name = models.CharField(max_length=30)
